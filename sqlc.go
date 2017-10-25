@@ -171,7 +171,7 @@ func CmdDump(clis *cli.Context) error {
 		if (clis.GlobalInt("debug")>0) { log.Printf("Dumping table: %s (%d/%d)",tablename,i,i); }
 		sqlq=fmt.Sprintf("SELECT * FROM %s", tablename)
 		for  rowsret:=limit; rowsret == limit; offset=offset+rowsret {
-			if clis.Int("max-rows") > 0 {
+			if clis.GlobalInt("max-rows") > 0 {
 				maxrows := int64(clis.GlobalInt("max-rows"))
 				minrows := int64(clis.GlobalInt("min-rows"))
 				if minrows < 1 {
@@ -328,34 +328,42 @@ func main() {
 	    },
 	    cli.StringFlag{
 		Name:  "q, query",
+		EnvVar: "SQLC_QUERY",
 		Usage: "Specify query to use (default: none)",
 	    },
 	    cli.StringFlag{
 		Name:  "o, output",
+		EnvVar: "SQLC_OUTPUT",
 		Usage: "Specify output file (default: none)",
 	    },
 	    cli.StringFlag{
 		Name:  "max-rows",
+		EnvVar: "SQLC_MAX_ROWS",
 		Usage: "Maximum rows returned per single query",
 	    },
 	    cli.StringFlag{
 		Name:  "min-rows",
+		EnvVar: "SQLC_MIN_ROWS",
 		Usage: "Minimum rows returned per single query",
 	    },
 	    cli.StringFlag{
 		Name:  "min-delay",
+		EnvVar: "SQLC_MIN_DELAY",
 		Usage: "Minimum Delay seconds between queries",
 	    },
 	    cli.StringFlag{
 		Name:  "max-delay",
+		EnvVar: "SQLC_MAX_DELAY",
 		Usage: "Maximum Delay seconds between queries",
 	    },
 	    cli.StringFlag{
 		Name:  "delay-between",
+		EnvVar: "SQLC_DELAY_BETWEEN",
 		Usage: "Delay seconds between queries",
 	    },
 	    cli.IntFlag{
 		Name:  "limit-rows",
+		EnvVar: "SQLC_LIMIT_ROWS",
 		Usage: "Limit number of rows returned per query",
 	    },
 	}
@@ -383,10 +391,12 @@ func main() {
 		Flags: []cli.Flag{
 		    cli.StringFlag{
 			Name:  "table",
+			EnvVar: "SQLC_TABLENAME",
 			Usage: "Name of table to dump",
 		    },
 		    cli.BoolFlag{
 			Name:  "all-tables",
+			EnvVar: "SQLC_ALL_TABLES",
 			Usage: "Dump all tables (including system tables)",
 		    },
 		},
