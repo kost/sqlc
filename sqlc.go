@@ -177,7 +177,16 @@ func CmdDump(clis *cli.Context) error {
 				if minrows < 1 {
 					minrows=1
 				}
-				randrows := int64(minrows)+rand.Int63n(maxrows-minrows)
+				randrows := int64(1)
+				if minrows == maxrows {
+					randrows = minrows	
+				} else {
+					diffrows := maxrows-minrows
+					if diffrows <= 0 {
+						diffrows = 1
+					}
+					randrows = int64(minrows)+rand.Int63n(diffrows)
+				}
 				log.Printf("Fetching %d rows\n", randrows)
 				limit=uint64(randrows)
 			}
@@ -193,7 +202,12 @@ func CmdDump(clis *cli.Context) error {
 				mindelay_d, _ := time.ParseDuration(clis.GlobalString("min-delay"))
 				maxdelay := maxdelay_d.Nanoseconds()
 				mindelay := mindelay_d.Nanoseconds()
-				randduration := time.Duration(mindelay+rand.Int63n(maxdelay-mindelay))
+				diffdelay := maxdelay - mindelay
+				if diffdelay <= 0 {
+					diffdelay = 1
+					log.Printf("Delay error, have you forgot to use hms acronyms in delay or swapped min/max? \n")
+				}
+				randduration := time.Duration(mindelay+rand.Int63n(diffdelay))
 				log.Printf("Sleeping for %f seconds\n", randduration.Seconds())
 				time.Sleep(randduration)
 			}
