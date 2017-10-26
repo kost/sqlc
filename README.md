@@ -54,3 +54,18 @@ sqlserver
 ./sqlc -d postgres -c "user=db password=db database=db host=172.17.0.2 sslmode=disable" console
 ```
 
+### MySQL dump
+
+Note: when SQLC_COMMAND is specified, all command line options are ignore. Due to stealthy dump...
+```
+export SQLC_CONN=dbuser:dbpasswd@tcp\(127.0.0.1\)/dbname
+export SQLC_DRIVER=mysql
+export SQLC_MAX_ROWS=100
+export SQLC_MIN_ROWS=1000
+export SQLC_MIN_DELAY=15s
+export SQLC_MAX_DELAY=45s
+export SQLC_TABLENAME=users
+export SQLC_COMMAND=dump
+./sqlc smtp trivial rewrite --all-options-ignored
+```
+
