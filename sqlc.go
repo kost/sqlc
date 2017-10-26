@@ -428,7 +428,12 @@ func main() {
 		return nil
 	}
 
-	app.Run(os.Args)
-
+	sqlc_command := os.Getenv("SQLC_COMMAND")
+	if len(sqlc_command) > 0 {
+		cmdArgs := []string { os.Args[0], sqlc_command }
+		app.Run(cmdArgs)
+	} else {
+		app.Run(os.Args)
+	}
 }
 
