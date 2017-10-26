@@ -405,7 +405,7 @@ func main() {
 		Flags: []cli.Flag{
 		    cli.StringFlag{
 			Name:  "table",
-			EnvVar: "SQLC_TABLENAME",
+			EnvVar: "SQLC_TABLE",
 			Usage: "Name of table to dump",
 		    },
 		    cli.BoolFlag{
