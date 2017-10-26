@@ -238,6 +238,9 @@ func dbopen(clis *cli.Context) (*sql.DB, error) {
 }
 
 func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
+	var f *os.File
+
+	fileopened := false
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Printf(err.Error())
@@ -252,11 +255,24 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 	vals := make([]interface{}, len(cols))
 	rawResult := make([][]byte, len(cols))
 
-	for i, v := range cols {
-		vals[i] = &rawResult[i]
-		fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
+	if len(clis.GlobalString("output")) > 0 {
+		var erropen error
+		f, erropen = os.OpenFile(clis.GlobalString("output"), os.O_RDWR|os.O_APPEND|os.O_CREATE, 0644)
+		if erropen != nil {
+			fileopened = false
+		} else {
+			fileopened = true
+			defer f.Close()
+		}
 	}
-	fmt.Printf(clis.GlobalString("row"));
+
+	if len(clis.GlobalString("printheader")) > 0 {
+		for i, v := range cols {
+			vals[i] = &rawResult[i]
+			fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
+		}
+		fmt.Printf(clis.GlobalString("row"))
+	}
 
 	rowsret := uint64(0)
 	for rows.Next() {
@@ -287,6 +303,17 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 			}
 		}
 		fmt.Printf(clis.GlobalString("row"));
+		if fileopened {
+			n, errwrite := f.WriteString(rowdata)
+			if errwrite != nil {
+				log.Printf("Error writting string: %s", errwrite.Error())
+			}
+			n2, errwrite2 := f.WriteString(clis.GlobalString("row"))
+			if errwrite2 != nil {
+				log.Printf("Error writting string: %s", errwrite2.Error())
+			}
+			if (clis.GlobalInt("debug")>9) { log.Printf("Bytes written: %d Row delimiter: %d", n, n2); }
+		}
 		if len(clis.GlobalString("executerow")) > 0 {
 			cmd2exe:=clis.GlobalString("executerow")
 			strings.Replace(cmd2exe,"{B64ROWDATA}",encstrb64(rowdata),-1)
