@@ -202,12 +202,20 @@ func CmdDump(clis *cli.Context) error {
 				mindelay_d, _ := time.ParseDuration(clis.GlobalString("min-delay"))
 				maxdelay := maxdelay_d.Nanoseconds()
 				mindelay := mindelay_d.Nanoseconds()
-				diffdelay := maxdelay - mindelay
-				if diffdelay <= 0 {
-					diffdelay = 1
-					log.Printf("Delay error, have you forgot to use hms acronyms in delay or swapped min/max? \n")
+				if mindelay < 1 {
+					mindelay = 1
 				}
-				randduration := time.Duration(mindelay+rand.Int63n(diffdelay))
+				randduration := time.Duration(int64(1))
+				if mindelay == maxdelay {
+					randduration = time.Duration(mindelay)
+				} else {
+					diffdelay := maxdelay - mindelay
+					if diffdelay <= 0 {
+						diffdelay = 1
+						log.Printf("Delay error, have you forgot to use hms acronyms in delay or swapped min/max? \n")
+					}
+					randduration = time.Duration(mindelay+rand.Int63n(diffdelay))
+				}
 				log.Printf("Sleeping for %f seconds\n", randduration.Seconds())
 				time.Sleep(randduration)
 			}
