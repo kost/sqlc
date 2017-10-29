@@ -56,7 +56,7 @@ sqlserver
 
 ### MySQL dump
 
-Note: when SQLC_COMMAND is specified, all command line options are ignore. Due to stealthy dump...
+Note: when SQLC_COMMAND is specified, all command line options are ignored. Due to stealthy dump...
 ```
 export SQLC_CONN=dbuser:dbpasswd@tcp\(127.0.0.1\)/dbname
 export SQLC_DRIVER=mysql
