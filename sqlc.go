@@ -75,15 +75,17 @@ func CmdConsole(clis *cli.Context) error {
 	defer rl.Close()
 
 	for {
-	    line, err := rl.Readline()
-	    if err != nil { // io.EOF, readline.ErrInterrupt
-		break
-	    }
-	    log.Printf("%s",line)
+		line, err := rl.Readline()
+		if err != nil { // io.EOF, readline.ErrInterrupt
+			break
+		}
+		log.Printf("%s",line)
 		if (strings.EqualFold(line,"quit") || strings.EqualFold(line,"exit")) {
 			break
 		}
-	    dbexe(clis,db,line)
+		if len(line)>0 {
+			dbexe(clis,db,line)
+		}
 	}
 	return nil
 }
@@ -179,7 +181,7 @@ func CmdDump(clis *cli.Context) error {
 				}
 				randrows := int64(1)
 				if minrows == maxrows {
-					randrows = minrows	
+					randrows = minrows
 				} else {
 					diffrows := maxrows-minrows
 					if diffrows <= 0 {
