@@ -193,6 +193,9 @@ func CmdDump(clis *cli.Context) error {
 				limit=uint64(randrows)
 			}
 			sqlqe := fmt.Sprintf("%s LIMIT %d OFFSET %d",sqlq, limit, offset)
+			if clis.GlobalString("database") == "mssql" {
+				sqlqe = fmt.Sprintf("%s ORDER BY 1 OFFSET %d ROWS FETCH NEXT %d ROWS ONLY", sqlq, offset, limit)
+			}
 			rowsret = dbexe(clis,db,sqlqe)
 			if len(clis.GlobalString("delay-between")) > 0 {
 				duration, _ := time.ParseDuration(clis.GlobalString("delay-between"))
