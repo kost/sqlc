@@ -79,11 +79,11 @@ func CmdConsole(clis *cli.Context) error {
 		if err != nil { // io.EOF, readline.ErrInterrupt
 			break
 		}
-		log.Printf("%s",line)
 		if (strings.EqualFold(line,"quit") || strings.EqualFold(line,"exit")) {
 			break
 		}
 		if len(line)>0 {
+			log.Printf("%s",line)
 			dbexe(clis,db,line)
 		}
 	}
