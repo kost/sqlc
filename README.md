@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/kost/sqlc.png)](https://travis-ci.org/kost/sqlc)
+[![Circle Status](https://circleci.com/gh/kost/sqlc.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/kost/sqlc)
+
 # sqlc
 sqlc - Universal DBMS/SQL client with exfiltration features :)
 
