@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/kost/sqlc.png)](https://travis-ci.org/kost/sqlc)
 [![Circle Status](https://circleci.com/gh/kost/sqlc.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/kost/sqlc)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1ad8ed944fc4289ad6d4f5c3537f3ba)](https://www.codacy.com/manual/kost/sqlc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kost/sqlc&amp;utm_campaign=Badge_Grade)
 
 # sqlc
 sqlc - Universal DBMS/SQL client with exfiltration features :)
