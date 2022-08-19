@@ -13,7 +13,7 @@ import (
 	"time"
 	"math/rand"
 	"github.com/chzyer/readline"
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/go-sql-driver/mysql"
@@ -280,6 +280,7 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 	}
 
 	rowsret := uint64(0)
+	if (clis.GlobalInt("debug")>9) { log.Printf("About to scan for %d",rowsret); }
 	for rows.Next() {
 		err = rows.Scan(vals...)
 		if err != nil {
@@ -287,6 +288,7 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 			return rowsret
 		}
 		rowdata:=""
+		if (clis.GlobalInt("debug")>9) { log.Printf("Starting to loop rawResult"); }
 		for i, r := range rawResult {
 			if r == nil {
 				fmt.Printf("<NIL>\t")
