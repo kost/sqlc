@@ -338,7 +338,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "sqlc"
 	app.Usage = "SQL Console Client"
-	app.Version = "0.0.1"
+	app.Version = "0.0.2"
 	// global level flags
 	app.Flags = []cli.Flag{
 	    cli.IntFlag{
