@@ -257,8 +257,11 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 		log.Printf(err.Error())
 		return uint64(0)
 	}
-	vals := make([]interface{}, len(cols))
+	valsp := make([]interface{}, len(cols))
 	rawResult := make([][]byte, len(cols))
+	for i, _ := range rawResult {
+		valsp[i] = &rawResult[i]
+	}
 
 	if len(clis.GlobalString("output")) > 0 {
 		var erropen error
@@ -272,26 +275,25 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 	}
 
 	if len(clis.GlobalString("printheader")) > 0 {
-		for i, v := range cols {
-			vals[i] = &rawResult[i]
+		for _, v := range cols {
 			fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
 		}
 		fmt.Printf(clis.GlobalString("row"))
 	}
 
 	rowsret := uint64(0)
-	if (clis.GlobalInt("debug")>9) { log.Printf("About to scan for %d",rowsret); }
+	if (clis.GlobalInt("debug")>18) { log.Printf("About to scan for next row"); }
 	for rows.Next() {
-		err = rows.Scan(vals...)
+		err = rows.Scan(valsp...)
 		if err != nil {
 			log.Printf(err.Error())
 			return rowsret
 		}
 		rowdata:=""
-		if (clis.GlobalInt("debug")>9) { log.Printf("Starting to loop rawResult"); }
+		if (clis.GlobalInt("debug")>28) { log.Printf("Starting to loop rawResult"); }
 		for i, r := range rawResult {
-			if r == nil {
-				fmt.Printf("<NIL>\t")
+			if len(r) == 0 {
+				fmt.Printf("<NIL>%s",clis.GlobalString("field"))
 			} else {
 				// fmt.Printf("%d: %s\t", i, string(r))
 				cell4row:=fmt.Sprintf("%s%s",string(r), clis.GlobalString("field"))
