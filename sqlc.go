@@ -1,5 +1,7 @@
 package main;
 
+const SQLC_VERSION string = "0.1.0"
+
 import (
 	"database/sql"
 	_ "encoding/csv"
@@ -362,7 +364,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "sqlc"
 	app.Usage = "SQL Console Client"
-	app.Version = "0.0.2"
+	app.Version = SQLC_VERSION
 	// global level flags
 	app.Flags = []cli.Flag{
 	    cli.IntFlag{
