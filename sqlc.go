@@ -280,15 +280,27 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 		}
 	}
 
+	rawheader:=""
 	if len(clis.GlobalString("printheader")) > 0 {
 		for _, v := range cols {
+			vdef:=""
 			if len(v) > 0 {
-				fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
+				vdef=string(v)
 			} else {
-				fmt.Printf("<NIL>%s",clis.GlobalString("field"))
+				vdef="<NIL>"
 			}
+			columnname:=fmt.Sprintf("%s%s", vdef, clis.GlobalString("field"))
+			fmt.Printf(columnname)
+			rawheader=rawheader+columnname
 		}
 		fmt.Printf(clis.GlobalString("row"))
+		rawheader=rawheader+clis.GlobalString("row")
+		if fileopened {
+			_, errwrite := f.WriteString(rawheader)
+			if errwrite != nil {
+				log.Printf("Error writting string: %s", errwrite.Error())
+			}
+		}
 	}
 
 	rowsret := uint64(0)
