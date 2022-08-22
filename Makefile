@@ -26,7 +26,7 @@ dist:
 	mkdir -p dist
 
 gox:
-	gox -ldflags="-s -w" -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+	CGO_ENABLED=0 gox -ldflags="-s -w" -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
 
 draft:
 	ghr -draft v$(VERSION) dist/

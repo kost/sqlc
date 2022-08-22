@@ -20,8 +20,9 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	_ "github.com/uber/athenadriver/go"
 	_ "github.com/nakagami/firebirdsql"
-	_ "github.com/alexbrainman/odbc"
 	_ "github.com/sijms/go-ora/v2"
+	// external dependency on unixODBC
+	// _ "github.com/alexbrainman/odbc"
 
 )
 
