@@ -282,7 +282,11 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 
 	if len(clis.GlobalString("printheader")) > 0 {
 		for _, v := range cols {
-			fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
+			if len(v) > 0 {
+				fmt.Printf("%s%s", string(v), clis.GlobalString("field"))
+			} else {
+				fmt.Printf("<NIL>%s",clis.GlobalString("field"))
+			}
 		}
 		fmt.Printf(clis.GlobalString("row"))
 	}
