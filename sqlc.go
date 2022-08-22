@@ -18,6 +18,11 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/uber/athenadriver/go"
+	_ "github.com/nakagami/firebirdsql"
+	_ "github.com/alexbrainman/odbc"
+	_ "github.com/sijms/go-ora/v2"
+
 )
 
 func execmd(clis *cli.Context, cmd string) ([]byte) {
