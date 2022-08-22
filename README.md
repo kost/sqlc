@@ -24,11 +24,16 @@ go build
 ### listing database drivers
 
 ```
-./sqlc list
+$ ./sqlc list
+awsathena
+firebirdsql
+firebirdsql_createdb
 mssql
 mysql
+oracle
 postgres
 sqlite3
+sqlmock
 sqlserver
 ```
 
