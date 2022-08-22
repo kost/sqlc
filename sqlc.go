@@ -281,7 +281,7 @@ func dbexe(clis *cli.Context, db *sql.DB, query string) (uint64) {
 	}
 
 	rawheader:=""
-	if len(clis.GlobalString("printheader")) > 0 {
+	if clis.GlobalBool("printheader") {
 		for _, v := range cols {
 			vdef:=""
 			if len(v) > 0 {
@@ -372,6 +372,11 @@ func main() {
 	    cli.BoolFlag{
 		Name:  "verbose",
 		Usage: "Show more output",
+	    },
+	    cli.BoolFlag{
+		Name:  "printheader",
+		EnvVar: "SQLC_PRINTHEADER",
+		Usage: "Print header before query output",
 	    },
 	    cli.StringFlag{
 		Name:  "d, driver, database",
