@@ -1,6 +1,4 @@
-package main;
-
-const SQLC_VERSION string = "0.1.0"
+package main
 
 import (
 	"database/sql"
@@ -27,6 +25,8 @@ import (
 	// _ "github.com/alexbrainman/odbc"
 
 )
+
+const SQLC_VERSION string = "0.1.1"
 
 func execmd(clis *cli.Context, cmd string) ([]byte) {
 	shell:="/bin/sh"
