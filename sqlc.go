@@ -149,7 +149,7 @@ func CmdDump(clis *cli.Context) error {
 
 	DumpFlags(clis)
 
-	// LIMIT 20 OFFSET 
+	// LIMIT 20 OFFSET
 	offset := uint64(0)
 	limit := uint64(2)
 
