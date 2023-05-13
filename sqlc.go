@@ -15,6 +15,8 @@ import (
 	"github.com/chzyer/readline"
 	"github.com/urfave/cli"
 	_ "github.com/lib/pq"
+	_ "github.com/thda/tds"
+	_ "modernc.org/sqlite"
 	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/denisenkom/go-mssqldb"
