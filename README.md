@@ -78,3 +78,24 @@ export SQLC_COMMAND=dump
 ./sqlc smtp trivial rewrite --all-options-ignored
 ```
 
+### Sybase
+
+Sybase ASE 12.5 or higher
+
+```
+tds://my_user:my_password@dbhost.com:5000/pubs?charset=utf8
+```
+
+### Oracle
+
+Oracle simple:
+```
+oracle://user:pass@server/service_name
+```
+
+Oracle example with multiple servers
+```
+oracle://user:pass@server1/service?server=server2&server=server3
+```
+
+
