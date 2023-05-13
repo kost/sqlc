@@ -26,8 +26,6 @@ import (
 
 )
 
-const SQLC_VERSION string = "0.1.1"
-
 func execmd(clis *cli.Context, cmd string) ([]byte) {
 	shell:="/bin/sh"
 	shellarg:="-c"
@@ -364,7 +362,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "sqlc"
 	app.Usage = "SQL Console Client"
-	app.Version = SQLC_VERSION
+	app.Version = Version
 	// global level flags
 	app.Flags = []cli.Flag{
 	    cli.IntFlag{
