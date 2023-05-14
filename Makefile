@@ -34,6 +34,9 @@ dist:
 gox:
 	CGO_ENABLED=0 gox -osarch="!darwin/386" -ldflags="-s -w -X main.Version=$(VERSION) -X main.CommitID=$(GIT_COMMIT)" -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
 
+goxwin:
+	CGO_ENABLED=0 gox -osarch="windows/386 windows/amd64" -ldflags="-X main.Version=$(VERSION) -X main.CommitID=$(GIT_COMMIT)" -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+
 draft:
 	ghr -draft v$(VERSION) dist/
 
